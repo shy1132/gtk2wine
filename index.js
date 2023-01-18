@@ -5,35 +5,35 @@ const os = require('os')
 //variables
 var homeDir = os.homedir()
 var gtkRegMappings = {
-    //"ActiveBorder": "49 54 58",
-    //"ActiveTitle": "49 54 58",
-    //"AppWorkSpace": "60 64 72",
+    "ActiveBorder": "",
+    "ActiveTitle": "",
+    "AppWorkSpace": "",
     "Background": "theme_base_color",
-    //"ButtonAlternativeFace": "200 0 0",
-    //"ButtonDkShadow": "154 154 154",
-    //"ButtonFace": "49 54 58",
-    //"ButtonHilight": "119 126 140",
-    //"ButtonLight": "60 64 72",
-    //"ButtonShadow": "60 64 72",
-    //"ButtonText": "219 220 222",
-    //"GradientActiveTitle": "49 54 58",
-    //"GradientInactiveTitle": "49 54 58",
-    //"GrayText": "155 155 155",
+    "ButtonAlternativeFace": "",
+    "ButtonDkShadow": "",
+    "ButtonFace": "",
+    "ButtonHilight": "",
+    "ButtonLight": "",
+    "ButtonShadow": "",
+    "ButtonText": "",
+    "GradientActiveTitle": "",
+    "GradientInactiveTitle": "",
+    "GrayText": "",
     "Hilight": "theme_selected_bg_color",
     "HilightText": "theme_selected_fg_color",
-    //"InactiveBorder": "49 54 58",
-    //"InactiveTitle": "49 54 58",
-    //"InactiveTitleText": "219 220 222",
-    //"InfoText": "159 167 180",
-    //"InfoWindow": "49 54 58",
-    //"Menu": "49 54 58",
-    //"MenuBar": "49 54 58",
-    //"MenuHilight": "119 126 140",
-    //"MenuText": "219 220 222",
-    //"Scrollbar": "73 78 88",
+    "InactiveBorder": "",
+    "InactiveTitle": "",
+    "InactiveTitleText": "",
+    "InfoText": "",
+    "InfoWindow": "",
+    "Menu": "",
+    "MenuBar": "",
+    "MenuHilight": "",
+    "MenuText": "",
+    "Scrollbar": "",
     "TitleText": "theme_titlebar_foreground",
     "Window": "theme_bg_color",
-    //"WindowFrame": "49 54 58",
+    "WindowFrame": "",
     "WindowText": "theme_text_color"
 }
 
@@ -67,8 +67,6 @@ for (let i = 0; i < regMappingsArr.length; i++) {
 
     regFile += `\r\n"${winAttribute}":"${gtkAttributeValue}"`
 }
-
-regFile += '\r\n\r\n'
 
 fs.writeFileSync('./output.reg', regFile)
 console.log('saved to output.reg')
