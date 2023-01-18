@@ -62,7 +62,6 @@ var regMappingsArr = Object.keys(gtkRegMappings)
 
 for (let i = 0; i < regMappingsArr.length; i++) {
     var winAttribute = regMappingsArr[i]
-    var winAttributeValue = regMappingsArr[winAttribute]
 
     var gtkAttribute = gtkRegMappings[winAttribute]
     var gtkAttributeValue = !gtkAttribute.includes(' ') ? hexToRgb(gtk3ThemeJSON[gtkAttribute]) : gtkAttribute
