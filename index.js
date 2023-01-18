@@ -47,7 +47,7 @@ function hexToRgb(hex) {
     } : null;
 }
 
-var gtk3ThemeCss = fs.readFileSync(`${homeDir}/.config/gtk-3.0/colors.css`).toString().split('\n')
+var gtk3ThemeCss = fs.readFileSync(`${homeDir}/.config/gtk-3.0/colors.css`).toString().trim().split('\n')
 var gtk3ThemeJSON = {}
 var regFile = `Windows Registry Editor Version 5.00
 
