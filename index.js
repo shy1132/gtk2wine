@@ -38,6 +38,15 @@ var gtkRegMappings = {
 }
 
 //code
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null;
+}
+
 var gtk3ThemeCss = fs.readFileSync(`${homeDir}/.config/gtk-3.0/colors.css`).toString().split('\n')
 var gtk3ThemeJSON = {}
 var regFile = `Windows Registry Editor Version 5.00
@@ -48,7 +57,7 @@ for (let i = 0; i < gtk3ThemeCss.length; i++) {
     gtk3ThemeCss[i] = gtk3ThemeCss[i].split('@define-color ')[1]
 
     var attribute = gtk3ThemeCss[i].slice(0, gtk3ThemeCss[i].lastIndexOf('_'))
-    var value = gtk3ThemeCss[i].split(' ')[1].slice(0, -1)
+    var value = gtk3ThemeCss[i].split(' ')[1].slice(1, -1)
 
     gtk3ThemeJSON[attribute] = value
 }
@@ -58,9 +67,9 @@ var regMappingsArr = Object.keys(gtkRegMappings)
 for (let i = 0; i < regMappingsArr.length; i++) {
     var winAttribute = regMappingsArr[i]
     var gtkAttribute = gtkRegMappings[winAttribute]
-    var gtkAttributeValue = gtk3ThemeJSON[gtkAttribute]
+    var gtkAttributeValue = hexToRgb(gtk3ThemeJSON[gtkAttribute])
 
-    regFile += `\n"${winAttribute}":${gtkAttributeValue}`
+    regFile += `\n"${winAttribute}":"${gtkAttributeValue}"`
 }
 
 fs.writeFileSync('./output.reg', regFile)
