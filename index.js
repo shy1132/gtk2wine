@@ -65,8 +65,10 @@ for (let i = 0; i < regMappingsArr.length; i++) {
     var gtkAttribute = gtkRegMappings[winAttribute]
     var gtkAttributeValue = hexToRgb(gtk3ThemeJSON[gtkAttribute])
 
-    regFile += `\n"${winAttribute}":"${gtkAttributeValue}"`
+    regFile += `\r\n"${winAttribute}":"${gtkAttributeValue}"`
 }
+
+regFile += '\r\n\r\n'
 
 fs.writeFileSync('./output.reg', regFile)
 console.log('saved to output.reg')
