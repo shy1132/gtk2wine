@@ -38,17 +38,30 @@ var gtkRegMappings = {
 }
 
 //code
-var gtk3ThemeCss = fs.readFileSync(`${homeDir}/.config/gtk-3.0/colors.css`).toString()
-var gtk3ThemeSplit = gtk3ThemeCss.split('\n')
+var gtk3ThemeCss = fs.readFileSync(`${homeDir}/.config/gtk-3.0/colors.css`).toString().split('\n')
 var gtk3ThemeJSON = {}
+var regFile = `Windows Registry Editor Version 5.00
 
-for (let i = 0; i < gtk3ThemeSplit.length; i++) {
-    gtk3ThemeSplit[i] = gtk3ThemeSplit[i].split('@define-color ')[1]
+[HKEY_CURRENT_USER\\Control Panel\\Colors]`
 
-    var attribute = gtk3ThemeSplit[i].slice(0, gtk3ThemeSplit[i].lastIndexOf('_'))
-    var value = gtk3ThemeSplit[i].split(' ')[1].slice(-1)
+for (let i = 0; i < gtk3ThemeCss.length; i++) {
+    gtk3ThemeCss[i] = gtk3ThemeCss[i].split('@define-color ')[1]
+
+    var attribute = gtk3ThemeCss[i].slice(0, gtk3ThemeCss[i].lastIndexOf('_'))
+    var value = gtk3ThemeCss[i].split(' ')[1].slice(-1)
 
     gtk3ThemeJSON[attribute] = value
 }
 
-console.log(gtk3ThemeJSON)
+var regMappingsArr = Object.keys(gtkRegMappings)
+
+for (let i = 0; i < regMappingsArr.length; i++) {
+    var winAttribute = regMappingsArr[i]
+    var gtkAttribute = gtkRegMappings[winAttribute]
+    var gtkAttributeValue = gtk3ThemeJSON[gtkAttribute]
+
+    regFile += `\n"${winAttribute}":${gtkAttributeValue}`
+}
+
+fs.writeFileSync('./output.reg', regFile)
+console.log('saved to output.reg')
