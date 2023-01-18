@@ -48,7 +48,7 @@ for (let i = 0; i < gtk3ThemeCss.length; i++) {
     gtk3ThemeCss[i] = gtk3ThemeCss[i].split('@define-color ')[1]
 
     var attribute = gtk3ThemeCss[i].slice(0, gtk3ThemeCss[i].lastIndexOf('_'))
-    var value = gtk3ThemeCss[i].split(' ')[1].slice(-1)
+    var value = gtk3ThemeCss[i].split(' ')[1].slice(0, -1)
 
     gtk3ThemeJSON[attribute] = value
 }
