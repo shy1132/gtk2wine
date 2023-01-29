@@ -23,7 +23,7 @@ var gtkRegMappings = {
     "HilightText": "theme_selected_fg_color",
     "InactiveBorder": "49 54 58",
     "InactiveTitle": "49 54 58",
-    "InactiveTitleText": "219 220 222",
+    "InactiveTitleText": "theme_unfocused_text_color",
     "InfoText": "159 167 180",
     "InfoWindow": "49 54 58",
     "Menu": "49 54 58",
