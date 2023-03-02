@@ -5,35 +5,36 @@ const os = require('os')
 //variables
 var homeDir = os.homedir()
 var gtkRegMappings = {
-    "ActiveBorder": "49 54 58",
-    "ActiveTitle": "49 54 58",
+    "ActiveBorder": "theme_bg_color",
+    "ActiveTitle": "theme_bg_color",
     "AppWorkSpace": "60 64 72",
     "Background": "theme_base_color",
-    "ButtonAlternativeFace": "200 0 0",
-    "ButtonDkShadow": "154 154 154",
-    "ButtonFace": "49 54 58",
-    "ButtonHilight": "119 126 140",
-    "ButtonLight": "60 64 72",
-    "ButtonShadow": "60 64 72",
-    "ButtonText": "219 220 222",
-    "GradientActiveTitle": "49 54 58",
-    "GradientInactiveTitle": "49 54 58",
-    "GrayText": "155 155 155",
+    "ButtonAlternativeFace": "theme_button_background_normal",
+    "ButtonDkShadow": "borders",
+    "ButtonFace": "theme_bg_color",
+    "ButtonHilight": "borders",
+    "ButtonLight": "theme_button_background_normal",
+    "ButtonShadow": "theme_bg_color",
+    "ButtonText": "theme_button_foreground_normal",
+    "GradientActiveTitle": "theme_bg_color",
+    "GradientInactiveTitle": "theme_bg_color",
+    "GrayText": "128 128 128",
     "Hilight": "theme_selected_bg_color",
     "HilightText": "theme_selected_fg_color",
-    "InactiveBorder": "49 54 58",
-    "InactiveTitle": "49 54 58",
+    "HotTrackingColor": "0 0 200",
+    "InactiveBorder": "theme_bg_color",
+    "InactiveTitle": "theme_bg_color",
     "InactiveTitleText": "theme_unfocused_text_color",
-    "InfoText": "159 167 180",
-    "InfoWindow": "49 54 58",
-    "Menu": "49 54 58",
-    "MenuBar": "49 54 58",
-    "MenuHilight": "119 126 140",
-    "MenuText": "219 220 222",
+    "InfoText": "theme_text_color",
+    "InfoWindow": "theme_bg_color",
+    "Menu": "theme_bg_color",
+    "MenuBar": "theme_bg_color",
+    "MenuHilight": "theme_selected_bg_color",
+    "MenuText": "theme_text_color",
     "Scrollbar": "73 78 88",
     "TitleText": "theme_titlebar_foreground",
     "Window": "theme_bg_color",
-    "WindowFrame": "49 54 58",
+    "WindowFrame": "theme_bg_color",
     "WindowText": "theme_text_color"
 }
 
@@ -45,9 +46,7 @@ function hexToRgb(hex) {
 
 var gtk3ThemeCss = fs.readFileSync(`${homeDir}/.config/gtk-3.0/colors.css`).toString().trim().split('\n')
 var gtk3ThemeJSON = {}
-var regFile = `Windows Registry Editor Version 5.00
-
-[HKEY_CURRENT_USER\\Control Panel\\Colors]`
+var regFile = `Windows Registry Editor Version 5.00\r\n\r\n[HKEY_CURRENT_USER\\Control Panel\\Colors]`
 
 for (let i = 0; i < gtk3ThemeCss.length; i++) {
     gtk3ThemeCss[i] = gtk3ThemeCss[i].split('@define-color ')[1]
@@ -66,8 +65,10 @@ for (let i = 0; i < regMappingsArr.length; i++) {
     var gtkAttribute = gtkRegMappings[winAttribute]
     var gtkAttributeValue = !gtkAttribute.includes(' ') ? hexToRgb(gtk3ThemeJSON[gtkAttribute]) : gtkAttribute
 
-    regFile += `\r\n"${winAttribute}":"${gtkAttributeValue}"`
+    regFile += `\r\n"${winAttribute}"="${gtkAttributeValue}"`
 }
 
-fs.writeFileSync('./output.reg', regFile)
+regFile += '\r\n\r\n'
+
+fs.writeFileSync('./output.reg', '\uFEFF'+regFile, 'utf16le')
 console.log('saved to output.reg')
