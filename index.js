@@ -9,7 +9,7 @@ var gtkRegMappings = {
     "ActiveTitle": "theme_bg_color",
     "AppWorkSpace": "60 64 72",
     "Background": "theme_base_color",
-    "ButtonAlternativeFace": "theme_button_background_normal",
+    "ButtonAlternateFace": "theme_button_background_normal",
     "ButtonDkShadow": "borders",
     "ButtonFace": "theme_bg_color",
     "ButtonHilight": "borders",
